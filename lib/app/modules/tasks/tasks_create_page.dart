@@ -35,7 +35,9 @@ class _TasksCreatePageState extends State<TasksCreatePage> {
       context: context,
       successCallback: (notifier, listenerInstance) {
         listenerInstance.dispose();
-        Navigator.of(context).pop();
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
       },
     );
   }
@@ -48,82 +50,87 @@ class _TasksCreatePageState extends State<TasksCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: const Text('Task'),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(
-              Icons.close_rounded,
-              color: Colors.black,
-              size: 30,
+    return WillPopScope(
+      onWillPop: () async => !widget._controller.loading,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: const Text('Task'),
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.close_rounded,
+                color: Colors.black,
+                size: 30,
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            if (!widget._controller.loading) {
+              final formValid = _formKey.currentState?.validate() ?? false;
+
+              if (formValid) {
+                widget._controller.save(
+                  _descriptionEC.text,
+                );
+              }
+            }
+          },
+          backgroundColor: context.primaryColor,
+          label: const Text(
+            'Salvar Task',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 18,
             ),
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          final formValid = _formKey.currentState?.validate() ?? false;
-
-          if (formValid) {
-            widget._controller.save(
-              _descriptionEC.text,
-            );
-          }
-        },
-        backgroundColor: context.primaryColor,
-        label: const Text(
-          'Salvar Task',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontSize: 18,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
           ),
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-      ),
-      body: Form(
-        key: _formKey,
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Criar Task',
-                  style: context.titleStyle.copyWith(
-                    fontSize: 24,
-                    color: Colors.grey[500],
+        body: Form(
+          key: _formKey,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Criar Task',
+                    style: context.titleStyle.copyWith(
+                      fontSize: 24,
+                      color: Colors.grey[800],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              TodoListField(
-                label: 'Título',
-                controller: _descriptionEC,
-                validator: Validatorless.multiple([
-                  Validatorless.required('Descrição é obrigatória'),
-                  Validatorless.min(3, 'Mínimo de 3 caracteres'),
-                ]),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CalendarButton(),
-            ],
+                const SizedBox(
+                  height: 30,
+                ),
+                TodoListField(
+                  label: 'Título',
+                  controller: _descriptionEC,
+                  validator: Validatorless.multiple([
+                    Validatorless.required('Descrição é obrigatória'),
+                    Validatorless.min(3, 'Mínimo de 3 caracteres'),
+                  ]),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CalendarButton(),
+              ],
+            ),
           ),
         ),
       ),

@@ -28,7 +28,7 @@ class TaskCreateController extends DefaultChangeNotifier {
   Future<void> save(String description) async {
     try {
       showLoadingAndResetState();
-      notifyListeners();
+
       if (_selectedDate != null && _userId != null) {
         log('Saving Task: $description, $_selectedDate, $_userId');
         await _tasksService.save(
@@ -37,16 +37,16 @@ class TaskCreateController extends DefaultChangeNotifier {
           _userId!,
         );
         log('Controller - Saved Task');
+        hideLoading();
         success();
       } else {
+        hideLoading();
         setError('Data da task não selecionada');
       }
     } catch (e, s) {
       log('Error on saving task', error: e, stackTrace: s);
-      setError('Erro ao salvar task');
-    } finally {
       hideLoading();
-      notifyListeners();
+      setError('Erro ao salvar task');
     }
   }
 }

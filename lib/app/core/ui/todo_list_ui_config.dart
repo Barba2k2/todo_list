@@ -19,7 +19,7 @@ class TodoListUiConfig {
             color: Colors.white,
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            fontFamily: GoogleFonts.mandali().fontFamily,
+            fontFamily: GoogleFonts.nunito().fontFamily,
           ),
         ),
       );

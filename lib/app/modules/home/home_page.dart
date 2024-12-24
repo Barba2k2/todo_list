@@ -45,8 +45,10 @@ class _HomePageState extends State<HomePage> {
     );
 
     WidgetsBinding.instance.addPostFrameCallback((itemStamp) {
-      widget._homeController.loadTotalTasks();
-      widget._homeController.findTasks(filter: TaskFilterEnum.today);
+      if (widget._homeController.userId != null) {
+        widget._homeController.loadTotalTasks();
+        widget._homeController.findTasks(filter: TaskFilterEnum.today);
+      }
     });
 
     _loadBannerAd();
@@ -101,7 +103,9 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    widget._homeController.refreshPage();
+    if (mounted) {
+      await widget._homeController.refreshPage();
+    }
   }
 
   @override
@@ -119,8 +123,7 @@ class _HomePageState extends State<HomePage> {
             actions: [
               Consumer<HomeController>(
                 builder: (context, controller, child) {
-                  final showOrHide =
-                      controller.showFinishingTasks ? 'Esconder' : 'Mostrar';
+                  final showOrHide = controller.showFinishingTasks ? 'Esconder' : 'Mostrar';
                   return PopupMenuButton(
                     color: Colors.white,
                     icon: const Icon(
@@ -151,7 +154,10 @@ class _HomePageState extends State<HomePage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100),
         ),
-        child: const Icon(Icons.add_rounded),
+        child: const Icon(
+          Icons.add_rounded,
+          color: Colors.white,
+        ),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {

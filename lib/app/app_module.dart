@@ -56,10 +56,17 @@ class AppModule extends StatelessWidget {
           )..loadListener(),
           lazy: false,
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProxyProvider<String?, HomeController>(
           create: (context) => HomeController(
             tasksService: context.read<TasksService>(),
           ),
+          update: (context, userId, controller) {
+            controller?.userId = userId;
+            if (userId != null) {
+              controller?.refreshPage();
+            }
+            return controller!;
+          },
         ),
         ProxyProvider<User?, String?>(
           update: (context, user, previous) => user?.uid,

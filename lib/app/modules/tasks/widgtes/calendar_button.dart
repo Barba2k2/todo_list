@@ -27,7 +27,7 @@ class CalendarButton extends StatelessWidget {
           initialDate: DateTime.now(),
           firstDate: DateTime(2020),
           lastDate: lastDate,
-          barrierColor: Colors.black.withOpacity(0.5),
+          barrierColor: Colors.black.withOpacity(0.8),
           builder: (context, child) => Theme(
             data: TodoListUiConfig.theme.copyWith(
               colorScheme: ColorScheme.light(
@@ -49,7 +49,7 @@ class CalendarButton extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           border: Border.all(
-            color: Colors.grey,
+            color: Colors.grey[800]!,
             width: 1,
           ),
           borderRadius: BorderRadius.circular(30),
@@ -58,9 +58,9 @@ class CalendarButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               Icons.calendar_today_rounded,
-              color: Colors.grey,
+              color: Colors.grey[800],
             ),
             const SizedBox(
               width: 10,
@@ -80,6 +80,7 @@ class CalendarButton extends StatelessWidget {
                     'SELECIONE UMA DATA',
                     style: context.titleStyle.copyWith(
                       fontSize: 14,
+                      color: Colors.black,
                     ),
                   );
                 }

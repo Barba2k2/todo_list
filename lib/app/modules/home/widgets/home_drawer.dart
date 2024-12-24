@@ -45,8 +45,7 @@ class HomeDrawer extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Selector<TodoListAuthProvider, String>(
                       selector: (context, authProvider) {
-                        return authProvider.user?.displayName ??
-                            'Nao informado';
+                        return authProvider.user?.displayName ?? 'Nao informado';
                       },
                       builder: (_, value, __) {
                         return Text(
@@ -100,6 +99,7 @@ class HomeDrawer extends StatelessWidget {
                         'Cancelar',
                         style: TextStyle(
                           color: Colors.red,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -111,13 +111,17 @@ class HomeDrawer extends StatelessWidget {
                             'Nome não pode ser vazio',
                           );
                         } else {
-                          await context
-                              .read<UserService>()
-                              .updateDisplayName(nameValue);
+                          await context.read<UserService>().updateDisplayName(nameValue);
                           Navigator.of(context).pop();
                         }
                       },
-                      child: const Text('Alterar'),
+                      child: const Text(
+                        'Alterar',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ],
                 ),

@@ -142,6 +142,8 @@ class HomeController extends DefaultChangeNotifier {
     filteredTasks = [];
     initialDateOfWeek = null;
     selectedDate = null;
+    filterSelect = TaskFilterEnum.today;
+    showFinishingTasks = false;
     log('Tasks cleared');
     notifyListeners();
   }

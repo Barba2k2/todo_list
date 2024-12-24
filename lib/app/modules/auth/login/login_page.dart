@@ -45,6 +45,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void dispose() {
+    _emailEC.dispose();
+    _passwordEC.dispose();
+    _emailFN.dispose();
+    context.read<LoginController>().removeListener(() {});
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -91,16 +100,14 @@ class _LoginPageState extends State<LoginPage> {
                                 controller: _passwordEC,
                                 validator: Validatorless.multiple([
                                   Validatorless.required('Senha obrigatória'),
-                                  Validatorless.min(6,
-                                      'Senha deve conter pelo menos 6 caracteres'),
+                                  Validatorless.min(6, 'Senha deve conter pelo menos 6 caracteres'),
                                 ]),
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   TextButton(
                                     onPressed: () {
@@ -119,9 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   ElevatedButton(
                                     onPressed: () {
-                                      final formValid =
-                                          _formKey.currentState?.validate() ??
-                                              false;
+                                      final formValid = _formKey.currentState?.validate() ?? false;
                                       if (formValid) {
                                         context.read<LoginController>().login(
                                               _emailEC.text,
@@ -181,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
                                   borderSide: BorderSide.none,
                                 ),
                                 onPressed: () {
-                                  context.read<LoginController>().googleLogin();
+                                  context.read<LoginController>().googleLogin(context);
                                 },
                               ),
                               Row(

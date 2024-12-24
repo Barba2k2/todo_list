@@ -35,11 +35,12 @@ class TodoListField extends StatelessWidget {
           validator: validator,
           focusNode: focusNode,
           decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(16),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(24),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(24),
               borderSide: const BorderSide(
                 color: Colors.red,
               ),
@@ -47,16 +48,17 @@ class TodoListField extends StatelessWidget {
             labelText: label,
             labelStyle: const TextStyle(
               color: Colors.black,
-              fontSize: 16,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
             ),
             isDense: true,
+            filled: true,
+            fillColor: Colors.black.withOpacity(0.01),
             suffixIcon: suffixIconButton ??
                 (obscureText == true
                     ? IconButton(
                         icon: Icon(
-                          !obscureTextValue
-                              ? Icons.lock_open_rounded
-                              : Icons.lock_rounded,
+                          !obscureTextValue ? Icons.lock_open_rounded : Icons.lock_rounded,
                           size: 22,
                         ),
                         onPressed: () {

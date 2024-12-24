@@ -10,12 +10,25 @@ class DefaultChangeNotifier extends ChangeNotifier {
   bool get hasError => _error != null;
   bool get isSuccess => _success;
 
-  void showLoading() => _loading = true;
-  void hideLoading() => _loading = false;
+  void showLoading() {
+    _loading = true;
+    notifyListeners();
+  }
 
-  void success() => _success = true;
+  void hideLoading() {
+    _loading = false;
+    notifyListeners();
+  }
 
-  void setError(String? error) => _error = error;
+  void success() {
+    _success = true;
+    notifyListeners();
+  }
+
+  void setError(String? error) {
+    _error = error;
+    notifyListeners();
+  }
 
   void showLoadingAndResetState() {
     showLoading();
@@ -25,5 +38,6 @@ class DefaultChangeNotifier extends ChangeNotifier {
   void resetState() {
     setError(null);
     _success = false;
+    notifyListeners();
   }
 }

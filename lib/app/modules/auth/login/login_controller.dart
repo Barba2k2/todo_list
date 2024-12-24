@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
+
 import '../../../core/auth/auth_provider.dart';
 import '../../../core/notifier/default_change_notifier.dart';
 import '../../../exceptions/auth_exception.dart';
@@ -87,7 +89,7 @@ class LoginController extends DefaultChangeNotifier {
     }
   }
 
-  Future<void> googleLogin() async {
+  Future<void> googleLogin(BuildContext context) async {
     try {
       await _userService.logout();
       showLoadingAndResetState();
@@ -95,14 +97,14 @@ class LoginController extends DefaultChangeNotifier {
       notifyListeners();
 
       final user = await _userService.googleLogin();
-
       log('User: $user');
 
       if (user != null) {
-        log('User ID: ${_authProvider.userId}');
-        _homeController.userId = _authProvider.userId;
-        _homeController.clearTasks();
-        success();
+        hideLoading();
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          '/home',
+          (route) => false,
+        );
       } else {
         _userService.logout();
         setError('Erro ao realizar login com o Google');
