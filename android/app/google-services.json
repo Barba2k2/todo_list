@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "804871130995",
+    "project_id": "todo-provider-2k24-barba",
+    "storage_bucket": "todo-provider-2k24-barba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804871130995:android:432789e0c4b3eb14db3f06",
+        "android_client_info": {
+          "package_name": "com.barbatech.new_todo_list"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804871130995-6kc6petlmaui3rl73oj6skpqgabji0ql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlwx2PNyqA_lXOq7R4t5_xbWTghtIS8IQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804871130995-6kc6petlmaui3rl73oj6skpqgabji0ql.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
